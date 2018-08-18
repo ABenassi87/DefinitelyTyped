@@ -1,4 +1,4 @@
-// Type definitions for PapaParse v4.5
+// Type definitions for PapaParse v4.6
 // Project: https://github.com/mholt/PapaParse
 // Definitions by: Pedro Flemming <https://github.com/torpedro>
 //                 Rain Shen <https://github.com/rainshen49>
@@ -89,35 +89,38 @@ export class Parser {
 }
 
 export interface ParseConfig {
-    delimiter?: string;            // default: ","
-    newline?: string;              // default: "\r\n"
-    quoteChar?: string;            // default: '"'
-    header?: boolean;              // default: false
-    dynamicTyping?: boolean;       // default: false
-    preview?: number;              // default: 0
-    encoding?: string;             // default: ""
-    worker?: boolean;              // default: false
-    comments?: boolean | string;   // default: false
-    download?: boolean;            // default: false
-    skipEmptyLines?: boolean;      // default: false
-    fastMode?: boolean;            // default: undefined
-    withCredentials?: boolean;     // default: undefined
+    delimiter?: string; // default: ","
+    newline?: string; // default: "\r\n"
+    quoteChar?: string; // default: '"'
+    escapeChar?: string;
+    header?: boolean; // default: false
+    trimHeaders?: boolean; // default: false
+    dynamicTyping?: boolean; // default: false
+    preview?: number; // default: 0
+    encoding?: string; // default: ""
+    worker?: boolean; // default: false
+    comments?: boolean | string; // default: false
+    download?: boolean; // default: false
+    skipEmptyLines?: boolean; // default: false
+    fastMode?: boolean; // default: undefined
+    withCredentials?: boolean; // default: undefined
 
     // Callbacks
-    step?(results: ParseResult, parser: Parser): void;  // default: undefined
+    step?(results: ParseResult, parser: Parser): void; // default: undefined
     complete?(results: ParseResult, file?: File): void; // default: undefined
-    error?(error: ParseError, file?: File): void;       // default: undefined
+    error?(error: ParseError, file?: File): void; // default: undefined
     chunk?(results: ParseResult, parser: Parser): void; // default: undefined
-    beforeFirstChunk?(chunk: string): string | void;    // default: undefined
+    beforeFirstChunk?(chunk: string): string | void; // default: undefined
+    transform?(value: any, columnNumber: number): any | void; // default: undefined
 }
 
 export interface UnparseConfig {
-    quotes?: boolean;      // default: false
-	quoteChar?: string;    // default: '"'
-	escapeChar?: string;   // default: '"'
-	delimiter?: string;    // default: ","
-	header?: boolean;      // default: true
-	newline?: string;      // default: "\r\n"
+    quotes?: boolean; // default: false
+    quoteChar?: string; // default: '"'
+    escapeChar?: string; // default: '"'
+    delimiter?: string; // default: ","
+    header?: boolean; // default: true
+    newline?: string; // default: "\r\n"
 }
 
 export interface UnparseObject {
@@ -126,18 +129,18 @@ export interface UnparseObject {
 }
 
 export interface ParseError {
-    type: string;     // A generalization of the error
-    code: string;     // Standardized error code
-    message: string;  // Human-readable details
-    row: number;      // Row index of parsed data where error is
+    type: string; // A generalization of the error
+    code: string; // Standardized error code
+    message: string; // Human-readable details
+    row: number; // Row index of parsed data where error is
 }
 
 export interface ParseMeta {
-    delimiter: string;     // Delimiter used
-    linebreak: string;     // Line break sequence used
-    aborted: boolean;      // Whether process was aborted
+    delimiter: string; // Delimiter used
+    linebreak: string; // Line break sequence used
+    aborted: boolean; // Whether process was aborted
     fields: Array<string>; // Array of field names
-    truncated: boolean;    // Whether preview consumed all input
+    truncated: boolean; // Whether preview consumed all input
 }
 
 /**
